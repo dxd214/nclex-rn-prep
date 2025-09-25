@@ -1,0 +1,3320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCLEX-RN Prep - Professional Nursing Exam Preparation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    <!-- User Management System -->
+    <script src="js/user-management.js"></script>
+    <style>
+        :root {
+            /* Modern Medical Color Palette */
+            --primary-600: #2563eb;
+            --primary-700: #1d4ed8;
+            --primary-50: #eff6ff;
+            --primary-100: #dbeafe;
+            
+            --success-500: #10b981;
+            --success-100: #d1fae5;
+            
+            --warning-500: #f59e0b;
+            --warning-100: #fef3c7;
+            
+            --error-500: #ef4444;
+            --error-100: #fee2e2;
+            
+            --neutral-900: #111827;
+            --neutral-800: #1f2937;
+            --neutral-700: #374151;
+            --neutral-600: #4b5563;
+            --neutral-500: #6b7280;
+            --neutral-400: #9ca3af;
+            --neutral-300: #d1d5db;
+            --neutral-200: #e5e7eb;
+            --neutral-100: #f3f4f6;
+            --neutral-50: #f9fafb;
+            
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--neutral-800);
+            line-height: 1.6;
+        }
+
+        /* Header with integrated navigation */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--neutral-200);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: var(--space-4) 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-8);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-600);
+            flex-shrink: 0;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary-600), var(--success-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Top Navigation */
+        .top-navigation {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-4);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            background: var(--primary-50);
+            color: var(--primary-600);
+            transform: translateY(-1px);
+        }
+
+        .nav-item.active {
+            background: var(--primary-600);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+
+        .nav-item span {
+            font-size: 0.9rem;
+        }
+
+        /* User Profile */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-600), var(--success-500));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-xl);
+            padding: var(--space-2);
+            min-width: 220px;
+            display: none;
+            z-index: 1001;
+        }
+        
+        .user-info {
+            padding: var(--space-3);
+            border-bottom: 1px solid var(--neutral-200);
+            margin-bottom: var(--space-2);
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: var(--space-1);
+        }
+        
+        .user-email {
+            font-size: 0.85rem;
+            color: var(--neutral-600);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: var(--neutral-200);
+            margin: var(--space-2) 0;
+        }
+
+        .user-dropdown.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: var(--space-2) var(--space-3);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .dropdown-item:hover {
+            background: var(--neutral-100);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px; /* Adjusted for new header height */
+            padding: var(--space-6);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: var(--space-6);
+        }
+
+        /* Quiz Page Styles */
+        .quiz-page {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin: 80px auto var(--space-6);
+            max-width: 1000px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: calc(100vh - 120px);
+            display: none;
+        }
+
+        .quiz-page.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .quiz-header {
+            padding: var(--space-8) var(--space-8) var(--space-6);
+            border-bottom: 1px solid var(--neutral-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .quiz-title-section {
+            flex: 1;
+        }
+
+        .quiz-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .quiz-subtitle {
+            color: var(--neutral-600);
+            font-size: 1.1rem;
+        }
+
+        .quiz-close-btn {
+            background: var(--neutral-100);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: var(--neutral-600);
+        }
+
+        .quiz-close-btn:hover {
+            background: var(--error-100);
+            color: var(--error-500);
+            transform: scale(1.05);
+        }
+
+        .quiz-content {
+            padding: var(--space-8);
+        }
+
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-8);
+            padding: var(--space-6);
+            background: var(--neutral-50);
+            border-radius: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+
+        .question-counter {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+        }
+
+        .question-category {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            padding: var(--space-2) var(--space-4);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .quiz-timer {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: white;
+            padding: var(--space-3) var(--space-4);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timer-icon {
+            color: var(--primary-600);
+        }
+
+        .timer-display {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+        }
+
+        .question-container {
+            background: white;
+            border-radius: 16px;
+            padding: var(--space-8);
+            margin-bottom: var(--space-8);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 500;
+            line-height: 1.7;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-8);
+        }
+
+        .answers-container {
+            display: grid;
+            gap: var(--space-4);
+        }
+
+        .answer-option {
+            background: var(--neutral-50);
+            border: 2px solid var(--neutral-200);
+            border-radius: 16px;
+            padding: var(--space-6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 1.1rem;
+        }
+
+        .answer-option:hover {
+            border-color: var(--primary-300);
+            background: var(--primary-50);
+            transform: translateY(-2px);
+        }
+
+        .answer-option.selected {
+            border-color: var(--primary-600);
+            background: var(--primary-50);
+            box-shadow: var(--shadow-md);
+        }
+
+        .answer-option.correct {
+            border-color: var(--success-500);
+            background: var(--success-100);
+        }
+
+        .answer-option.incorrect {
+            border-color: var(--error-500);
+            background: var(--error-100);
+        }
+
+        .answer-letter {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--neutral-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .answer-option.selected .answer-letter {
+            background: var(--primary-600);
+            color: white;
+        }
+
+        .answer-option.correct .answer-letter {
+            background: var(--success-500);
+            color: white;
+        }
+
+        .answer-option.incorrect .answer-letter {
+            background: var(--error-500);
+            color: white;
+        }
+
+        .quiz-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-6) var(--space-8);
+            border-top: 1px solid var(--neutral-200);
+            background: var(--neutral-50);
+        }
+
+        .control-left {
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        .control-right {
+            display: flex;
+            gap: var(--space-4);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--neutral-100);
+            color: var(--neutral-700);
+            border: 1px solid var(--neutral-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neutral-200);
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-500), #d97706);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Explanation Section */
+        .explanation-section {
+            background: white;
+            border-radius: 16px;
+            padding: var(--space-8);
+            margin-bottom: var(--space-8);
+            border: 1px solid var(--neutral-200);
+            display: none;
+        }
+
+        .explanation-section.show {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .explanation-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            border-radius: 12px;
+        }
+
+        .explanation-header.correct {
+            background: var(--success-100);
+            color: var(--success-700);
+        }
+
+        .explanation-header.incorrect {
+            background: var(--error-100);
+            color: var(--error-700);
+        }
+
+        .explanation-icon {
+            font-size: 1.5rem;
+        }
+
+        .explanation-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .explanation-content {
+            margin-bottom: var(--space-6);
+        }
+
+        .explanation-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: var(--space-4);
+        }
+
+        .explanation-rationale {
+            background: var(--neutral-50);
+            padding: var(--space-4);
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-600);
+        }
+
+        .explanation-rationale-title {
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: var(--space-2);
+        }
+
+        .explanation-rationale-text {
+            color: var(--neutral-600);
+            line-height: 1.6;
+        }
+
+        /* Cards for main pages */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: var(--space-8);
+            margin-bottom: var(--space-6);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* Chart Container Styles */
+        .chart-container {
+            height: 300px;
+            position: relative;
+            margin: var(--space-6) 0;
+            padding: var(--space-4);
+            background: linear-gradient(135deg, var(--neutral-50), white);
+            border-radius: 16px;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+        }
+
+        .chart-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 2px solid white;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .chart-point:hover {
+            width: 12px;
+            height: 12px;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .chart-point.below-passing {
+            background: var(--error-500);
+        }
+
+        .chart-point.passing {
+            background: var(--warning-500);
+        }
+
+        .chart-point.excellent {
+            background: var(--success-500);
+        }
+
+        .chart-tooltip {
+            position: absolute;
+            background: var(--neutral-900);
+            color: white;
+            padding: var(--space-2) var(--space-3);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+
+        /* Modern Settings Page Styles */
+        .settings-header {
+            padding: 0 var(--space-6) var(--space-8) var(--space-6);
+        }
+
+        .settings-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .settings-title i {
+            background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+            color: white;
+            padding: var(--space-3);
+            border-radius: 12px;
+            font-size: 1.25rem;
+        }
+
+        .settings-subtitle {
+            color: var(--neutral-600);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .settings-section {
+            margin-bottom: var(--space-8);
+            padding: 0 var(--space-6);
+        }
+
+        .section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-4);
+        }
+
+        .settings-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--neutral-100);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 72px;
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-item:hover {
+            background: var(--neutral-50);
+        }
+
+        .setting-item.danger:hover {
+            background: var(--error-50);
+        }
+
+        .setting-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            flex: 1;
+        }
+
+        .setting-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .setting-icon.study-mode {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .setting-icon.exam-date {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .setting-icon.daily-goal {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .setting-icon.theme {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .setting-icon.notifications {
+            background: linear-gradient(135deg, #fa709a, #fee140);
+        }
+
+        .setting-icon.score-alerts {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+        }
+
+        .setting-icon.premium {
+            background: linear-gradient(135deg, #ffd89b, #19547b);
+        }
+
+        .setting-icon.export {
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+        }
+
+        .setting-icon.data {
+            background: linear-gradient(135deg, #fdbb2d, #22c1c3);
+        }
+
+        .setting-icon.reset {
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
+        }
+
+        .setting-icon.version {
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+        }
+
+        .setting-icon.support {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: 2px;
+        }
+
+        .setting-desc {
+            font-size: 0.875rem;
+            color: var(--neutral-600);
+            line-height: 1.4;
+        }
+
+        .setting-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .setting-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+        }
+
+        .setting-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .setting-badge.countdown {
+            background: var(--warning-100);
+            color: var(--warning-700);
+        }
+
+        .setting-badge.premium {
+            background: linear-gradient(135deg, var(--warning-400), var(--warning-600));
+            color: white;
+        }
+
+        .setting-right i {
+            color: var(--neutral-400);
+            font-size: 0.875rem;
+        }
+
+        /* Toggle Switch Component */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--neutral-300);
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .toggle-slider {
+            background: var(--primary-600);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Goal Controls */
+        .goal-controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: var(--neutral-100);
+            border-radius: 12px;
+            padding: var(--space-1);
+        }
+
+        .goal-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: white;
+            color: var(--primary-600);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .goal-btn:hover {
+            background: var(--primary-50);
+            transform: scale(1.05);
+        }
+
+        .goal-btn:active {
+            transform: scale(0.95);
+        }
+
+        .goal-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            min-width: 32px;
+            text-align: center;
+        }
+
+        /* Danger state for reset option */
+        .setting-item.danger .setting-name {
+            color: var(--error-600);
+        }
+
+        .setting-item.danger .setting-icon {
+            background: linear-gradient(135deg, var(--error-500), var(--error-600));
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-6);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .card-title i {
+            color: var(--primary-600);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: var(--space-6);
+            text-align: center;
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .stat-label {
+            color: var(--neutral-600);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 120px; /* Adjusted for top navigation */
+            right: var(--space-6);
+            background: white;
+            border-radius: 12px;
+            padding: var(--space-4);
+            box-shadow: var(--shadow-xl);
+            border-left: 4px solid var(--success-500);
+            z-index: 1500;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-4);
+                padding: var(--space-4) var(--space-6);
+            }
+            
+            .main-content {
+                margin-top: 140px; /* Adjusted for stacked header */
+            }
+            
+            .quiz-page {
+                margin-top: 140px;
+            }
+            
+            .top-navigation {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .nav-item span {
+                display: none;
+            }
+            
+            .nav-item {
+                padding: var(--space-2) var(--space-3);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: var(--space-3) var(--space-4);
+            }
+            
+            .main-content {
+                padding: var(--space-4);
+                margin-top: 120px;
+            }
+            
+            .quiz-page {
+                margin: 120px var(--space-4) var(--space-4);
+                min-height: calc(100vh - 140px);
+            }
+            
+            .quiz-header {
+                padding: var(--space-6) var(--space-6) var(--space-4);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-4);
+            }
+            
+            .quiz-title {
+                font-size: 1.5rem;
+            }
+            
+            .quiz-content {
+                padding: var(--space-6);
+            }
+            
+            .quiz-progress {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-4);
+            }
+            
+            .progress-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-3);
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .answer-option {
+                padding: var(--space-4);
+                font-size: 1rem;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                gap: var(--space-4);
+                padding: var(--space-4) var(--space-6);
+            }
+            
+            .control-left,
+            .control-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .card {
+                padding: var(--space-6);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-4);
+            }
+            
+            .logo span {
+                display: none;
+            }
+            
+            .top-navigation {
+                gap: var(--space-1);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Hide content initially */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with integrated navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-user-nurse"></i>
+                <span>NCLEX-RN Prep</span>
+            </div>
+            
+            <!-- Top Navigation -->
+            <nav class="top-navigation">
+                <a href="#" class="nav-item active" onclick="switchTab('home')" data-tab="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('tests')" data-tab="tests">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Tests</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('analytics')" data-tab="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" onclick="switchTab('settings')" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="user-profile">
+                <div class="user-avatar" onclick="toggleUserDropdown()" id="userAvatar">?</div>
+                <div id="userDropdown" class="user-dropdown">
+                    <div class="user-info" id="userInfo">
+                        <div class="user-name">Loading...</div>
+                        <div class="user-email"></div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" onclick="editProfile()">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                    <div class="dropdown-item" onclick="viewSubscription()">
+                        <i class="fas fa-crown"></i>
+                        <span>Subscription</span>
+                    </div>
+                    <div class="dropdown-item" onclick="viewProgress()">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </div>
+                    <div class="dropdown-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div id="home-content" class="page-content active">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h1 class="card-title">
+                        <i class="fas fa-home"></i>
+                        Welcome Back, Future RN!
+                    </h1>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="showDetails('progress')">
+                        <div class="stat-value" style="color: var(--primary-600);" id="overallProgress">72%</div>
+                        <div class="stat-label">Overall Progress</div>
+                    </div>
+                    <div class="stat-card" onclick="showDetails('days')">
+                        <div class="stat-value" style="color: var(--success-500);" id="daysStudied">28</div>
+                        <div class="stat-label">Days Studied</div>
+                    </div>
+                    <div class="stat-card" onclick="showDetails('questions')">
+                        <div class="stat-value" style="color: var(--warning-500);" id="questionsCompleted">1247</div>
+                        <div class="stat-label">Questions Completed</div>
+                    </div>
+                    <div class="stat-card" onclick="showDetails('exam')">
+                        <div class="stat-value" style="color: var(--error-500);" id="daysUntilExam">42</div>
+                        <div class="stat-label">Days Until Exam</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: var(--space-4); margin-top: var(--space-6);">
+                    <a href="#" class="btn btn-primary" onclick="switchTab('tests')">
+                        <i class="fas fa-play"></i>
+                        Continue Studying
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="switchTab('analytics')">
+                        <i class="fas fa-chart-line"></i>
+                        View Progress
+                    </a>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-target"></i>
+                        Today's Focus Areas
+                    </h2>
+                </div>
+                
+                <div class="subjects-grid">
+                    <div class="subject-card" onclick="startPractice('management')">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div>
+                                <div class="subject-title">Management of Care</div>
+                                <div class="subject-subtitle">Leadership & Ethics</div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>68%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 68%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="subject-card" onclick="startPractice('safety')">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div>
+                                <div class="subject-title">Safety & Infection Control</div>
+                                <div class="subject-subtitle">Patient Safety</div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>82%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-bullseye"></i>
+                        Today's Learning Goal
+                    </h2>
+                </div>
+                
+                <div style="background: var(--neutral-50); border-radius: 16px; padding: var(--space-6); margin-bottom: var(--space-6);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+                        <div>
+                            <div style="font-size: 1.1rem; font-weight: 600; color: var(--neutral-800);">Daily Question Goal</div>
+                            <div style="color: var(--neutral-600); font-size: 0.875rem;">Complete 50 practice questions</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--primary-600);" id="todayProgress">23/50</div>
+                            <div style="color: var(--neutral-600); font-size: 0.875rem;">questions</div>
+                        </div>
+                    </div>
+                    <div class="progress-container" style="margin: 0;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 46%"></div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: var(--space-3); font-size: 0.875rem; color: var(--neutral-600);">
+                        <span>46% Complete</span>
+                        <span>27 more to go!</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: var(--space-4);">
+                    <button class="btn btn-primary" onclick="startQuickPractice()" style="flex: 1; justify-content: center;">
+                        <i class="fas fa-lightning-bolt"></i>
+                        Quick Practice (10 questions)
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchTab('analytics')" style="flex: 1; justify-content: center;">
+                        <i class="fas fa-trophy"></i>
+                        View Achievements
+                    </button>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-clock"></i>
+                        Recent Activity
+                    </h2>
+                    <a href="#" class="btn btn-secondary" onclick="switchTab('analytics')" style="font-size: 0.875rem;">
+                        View All
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div style="display: grid; gap: var(--space-4);">
+                    <div style="display: flex; align-items: center; padding: var(--space-4); background: var(--neutral-50); border-radius: 12px; border-left: 4px solid var(--success-500);">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--success-100); display: flex; align-items: center; justify-content: center; margin-right: var(--space-4);">
+                            <i class="fas fa-check" style="color: var(--success-500);"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--neutral-900);">Safety & Infection Control Quiz</div>
+                            <div style="color: var(--neutral-600); font-size: 0.875rem;">Completed 2 hours ago</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: var(--success-500);">87%</div>
+                            <div style="color: var(--neutral-500); font-size: 0.875rem;">8/10 correct</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; padding: var(--space-4); background: var(--neutral-50); border-radius: 12px; border-left: 4px solid var(--warning-500);">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--warning-100); display: flex; align-items: center; justify-content: center; margin-right: var(--space-4);">
+                            <i class="fas fa-brain" style="color: var(--warning-500);"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--neutral-900);">Adaptive Practice Test</div>
+                            <div style="color: var(--neutral-600); font-size: 0.875rem;">Completed yesterday</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: var(--warning-500);">74%</div>
+                            <div style="color: var(--neutral-500); font-size: 0.875rem;">37/50 correct</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; padding: var(--space-4); background: var(--neutral-50); border-radius: 12px; border-left: 4px solid var(--primary-600);">
+                        <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary-100); display: flex; align-items: center; justify-content: center; margin-right: var(--space-4);">
+                            <i class="fas fa-user-md" style="color: var(--primary-600);"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--neutral-900);">Management of Care Practice</div>
+                            <div style="color: var(--neutral-600); font-size: 0.875rem;">Completed 2 days ago</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: var(--primary-600);">81%</div>
+                            <div style="color: var(--neutral-500); font-size: 0.875rem;">12/15 correct</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Today's Study Tip
+                    </h2>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, var(--primary-50), var(--success-50)); border-radius: 16px; padding: var(--space-6); border: 1px solid var(--primary-100);">
+                    <div style="display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-4);">
+                        <div style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--primary-600), var(--success-500)); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-graduation-cap" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 700; color: var(--neutral-900); font-size: 1.1rem;">NCLEX-RN Test Strategy</div>
+                            <div style="color: var(--neutral-700); font-size: 0.875rem;">Master the elimination process</div>
+                        </div>
+                    </div>
+                    
+                    <div style="color: var(--neutral-800); line-height: 1.6; margin-bottom: var(--space-4);">
+                        <strong>Use the process of elimination effectively:</strong> When facing difficult questions, eliminate obviously wrong answers first. Look for absolutes like "always" or "never" - they're usually incorrect. Focus on patient safety and ABC (Airway, Breathing, Circulation) priorities.
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: var(--space-2); color: var(--primary-700);">
+                        <i class="fas fa-star"></i>
+                        <span style="font-weight: 600; font-size: 0.875rem;">This tip has helped 89% of students improve their scores</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Study Schedule
+                    </h2>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4);">
+                    <div style="background: var(--neutral-50); border-radius: 16px; padding: var(--space-6); text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: var(--space-2);">📅</div>
+                        <div style="font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1);">Next Study Session</div>
+                        <div style="color: var(--primary-600); font-weight: 600;">Today, 7:00 PM</div>
+                        <div style="color: var(--neutral-600); font-size: 0.875rem;">Pharmacology Review</div>
+                    </div>
+
+                    <div style="background: var(--neutral-50); border-radius: 16px; padding: var(--space-6); text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: var(--space-2);">🔥</div>
+                        <div style="font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1);">Study Streak</div>
+                        <div style="color: var(--warning-500); font-weight: 600; font-size: 1.5rem;">7 Days</div>
+                        <div style="color: var(--neutral-600); font-size: 0.875rem;">Keep it going!</div>
+                    </div>
+
+                    <div style="background: var(--neutral-50); border-radius: 16px; padding: var(--space-6); text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: var(--space-2);">⚡</div>
+                        <div style="font-weight: 600; color: var(--neutral-900); margin-bottom: var(--space-1);">Weekly Goal</div>
+                        <div style="color: var(--success-500); font-weight: 600;">210/350</div>
+                        <div style="color: var(--neutral-600); font-size: 0.875rem;">questions completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tests Page -->
+        <div id="tests-content" class="page-content">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h1 class="card-title">
+                        <i class="fas fa-clipboard-list"></i>
+                        Practice Tests
+                    </h1>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-500);" id="avgScore">78%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--primary-600);" id="testsCompleted">15</div>
+                        <div class="stat-label">Tests Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--warning-500);" id="questionsLeft">205</div>
+                        <div class="stat-label">Questions Left</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--error-500);" id="flaggedItems">23</div>
+                        <div class="stat-label">Flagged Items</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--space-4); margin: var(--space-8) 0;">
+                    <button class="btn btn-primary" onclick="startQuiz('adaptive')" style="padding: var(--space-4); justify-content: center;">
+                        <i class="fas fa-brain"></i>
+                        Adaptive Practice Test
+                    </button>
+                    <button class="btn btn-success" onclick="startQuiz('timed')" style="padding: var(--space-4); justify-content: center;">
+                        <i class="fas fa-clock"></i>
+                        Timed Practice Test
+                    </button>
+                    <button class="btn btn-warning" onclick="reviewFlagged()" style="padding: var(--space-4); justify-content: center;">
+                        <i class="fas fa-flag"></i>
+                        Review Flagged
+                    </button>
+                    <button class="btn btn-secondary" onclick="customQuiz()" style="padding: var(--space-4); justify-content: center;">
+                        <i class="fas fa-cog"></i>
+                        Custom Quiz
+                    </button>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-books"></i>
+                        Study by Category
+                    </h2>
+                </div>
+                
+                <div class="subjects-grid" id="subjectsGrid">
+                    <!-- Subjects will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Page -->
+        <div id="analytics-content" class="page-content">
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h1 class="card-title">
+                        <i class="fas fa-chart-line"></i>
+                        Performance Analytics
+                    </h1>
+                    <button class="btn btn-secondary" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        Export Data
+                    </button>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--primary-600);" id="analyticsTests">15</div>
+                        <div class="stat-label">Tests Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-500);" id="analyticsQuestions">1247</div>
+                        <div class="stat-label">Questions Answered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--warning-500);" id="studyHours">186</div>
+                        <div class="stat-label">Study Hours</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success-500);" id="analyticsAvg">78%</div>
+                        <div class="stat-label">Average Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Learning Progress Curve
+                    </h2>
+                    <div style="display: flex; gap: var(--space-4);">
+                        <button class="btn btn-secondary" onclick="changeTimeframe('week')">7 Days</button>
+                        <button class="btn btn-secondary" onclick="changeTimeframe('month')">30 Days</button>
+                        <button class="btn btn-primary" onclick="changeTimeframe('all')">All Time</button>
+                    </div>
+                </div>
+                
+                <div class="chart-container" id="chartContainer">
+                    <canvas class="chart-canvas" id="learningChart" width="800" height="300"></canvas>
+                </div>
+                
+                <div style="display: flex; justify-content: center; gap: var(--space-6); margin-top: var(--space-4);">
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                        <div style="width: 12px; height: 12px; background: var(--error-500); border-radius: 50%;"></div>
+                        <span style="font-size: 0.875rem; color: var(--neutral-600);">Below Passing (60-74%)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                        <div style="width: 12px; height: 12px; background: var(--warning-500); border-radius: 50%;"></div>
+                        <span style="font-size: 0.875rem; color: var(--neutral-600);">Passing (75-84%)</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                        <div style="width: 12px; height: 12px; background: var(--success-500); border-radius: 50%;"></div>
+                        <span style="font-size: 0.875rem; color: var(--neutral-600);">Excellent (85%+)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in-up">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-bullseye"></i>
+                        Subject Performance
+                    </h2>
+                </div>
+                
+                <div id="subjectPerformance">
+                    <!-- Subject performance will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-content" class="page-content">
+            <div class="settings-header">
+                <h1 class="settings-title">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </h1>
+                <p class="settings-subtitle">Customize your learning experience</p>
+            </div>
+
+            <!-- Study Preferences Section -->
+            <div class="settings-section">
+                <h3 class="section-title">Study Preferences</h3>
+                
+                <div class="settings-card">
+                    <div class="setting-item" onclick="adjustStudyMode()">
+                        <div class="setting-left">
+                            <div class="setting-icon study-mode">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Study Mode</div>
+                                <div class="setting-desc" id="studyModeDesc">Adaptive Learning</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <span class="setting-value">Current</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="setting-item" onclick="setExamDate()">
+                        <div class="setting-left">
+                            <div class="setting-icon exam-date">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Exam Date</div>
+                                <div class="setting-desc">March 15, 2025</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <span class="setting-badge countdown">42 days</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-left">
+                            <div class="setting-icon daily-goal">
+                                <i class="fas fa-target"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Daily Goal</div>
+                                <div class="setting-desc">Questions per day</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <div class="goal-controls">
+                                <button class="goal-btn" onclick="adjustGoal(-10)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="goal-value" id="dailyGoalValue">50</span>
+                                <button class="goal-btn" onclick="adjustGoal(10)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display & Notifications Section -->
+            <div class="settings-section">
+                <h3 class="section-title">Display & Notifications</h3>
+                
+                <div class="settings-card">
+                    <div class="setting-item">
+                        <div class="setting-left">
+                            <div class="setting-icon theme">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Dark Mode</div>
+                                <div class="setting-desc">Easier on the eyes</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-left">
+                            <div class="setting-icon notifications">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Study Reminders</div>
+                                <div class="setting-desc">Daily at 7:00 PM</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="remindersToggle" checked onchange="toggleReminders()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <div class="setting-left">
+                            <div class="setting-icon score-alerts">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Score Alerts</div>
+                                <div class="setting-desc">Performance notifications</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="scoreAlertsToggle" checked onchange="toggleScoreAlerts()">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Section -->
+            <div class="settings-section">
+                <h3 class="section-title">Account</h3>
+                
+                <div class="settings-card">
+                    <div class="setting-item" onclick="manageSubscription()">
+                        <div class="setting-left">
+                            <div class="setting-icon premium">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Subscription</div>
+                                <div class="setting-desc">Premium Plan</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <span class="setting-badge premium">ACTIVE</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="setting-item" onclick="exportProgress()">
+                        <div class="setting-left">
+                            <div class="setting-icon export">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Export Data</div>
+                                <div class="setting-desc">Download progress report</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Section -->
+            <div class="settings-section">
+                <h3 class="section-title">Advanced</h3>
+                
+                <div class="settings-card">
+                    <div class="setting-item" onclick="showDataUsage()">
+                        <div class="setting-left">
+                            <div class="setting-icon data">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Data Usage</div>
+                                <div class="setting-desc">Storage and sync info</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <span class="setting-value">2.4 MB</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="setting-item danger" onclick="resetProgress()">
+                        <div class="setting-left">
+                            <div class="setting-icon reset">
+                                <i class="fas fa-refresh"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Reset Progress</div>
+                                <div class="setting-desc">Clear all study data</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <div class="settings-section">
+                <h3 class="section-title">About</h3>
+                
+                <div class="settings-card">
+                    <div class="setting-item" onclick="showVersion()">
+                        <div class="setting-left">
+                            <div class="setting-icon version">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">App Version</div>
+                                <div class="setting-desc">Build 1247</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <span class="setting-value">2.1.4</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="setting-item" onclick="showSupport()">
+                        <div class="setting-left">
+                            <div class="setting-icon support">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="setting-info">
+                                <div class="setting-name">Help & Support</div>
+                                <div class="setting-desc">Get assistance</div>
+                            </div>
+                        </div>
+                        <div class="setting-right">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Full Screen Quiz Page -->
+    <div id="quizPage" class="quiz-page">
+        <div class="quiz-header">
+            <div class="quiz-title-section">
+                <h1 class="quiz-title" id="quizPageTitle">Adaptive Practice Quiz</h1>
+                <p class="quiz-subtitle" id="quizPageSubtitle">NCLEX-RN Preparation • All Categories</p>
+            </div>
+            <button class="quiz-close-btn" onclick="exitQuiz()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="quiz-content">
+            <div class="quiz-progress">
+                <div class="progress-info">
+                    <div class="question-counter">
+                        Question <span id="currentQuestion">1</span> of <span id="totalQuestions">10</span>
+                    </div>
+                    <div class="question-category" id="questionCategory">Management of Care</div>
+                </div>
+                <div class="quiz-timer" id="quizTimer" style="display: none;">
+                    <i class="fas fa-clock timer-icon"></i>
+                    <span class="timer-display" id="timerDisplay">15:00</span>
+                </div>
+            </div>
+
+            <div class="question-container" id="questionContainer">
+                <div class="question-text" id="questionText">
+                    A nurse is caring for a client who refuses to take prescribed medication. Which ethical principle should guide the nurse's response?
+                </div>
+
+                <div class="answers-container" id="answersContainer">
+                    <div class="answer-option" onclick="selectAnswer(0)">
+                        <div class="answer-letter">A</div>
+                        <div>Autonomy - respecting the client's right to make decisions</div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(1)">
+                        <div class="answer-letter">B</div>
+                        <div>Beneficence - doing what's best for the client</div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(2)">
+                        <div class="answer-letter">C</div>
+                        <div>Justice - ensuring fair treatment</div>
+                    </div>
+                    <div class="answer-option" onclick="selectAnswer(3)">
+                        <div class="answer-letter">D</div>
+                        <div>Fidelity - being truthful and trustworthy</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="explanation-section" id="explanationSection">
+                <div class="explanation-header correct" id="explanationHeader">
+                    <i class="fas fa-check-circle explanation-icon"></i>
+                    <div class="explanation-title">Correct! The answer is A.</div>
+                </div>
+                
+                <div class="explanation-content">
+                    <div class="explanation-text" id="explanationText">
+                        Autonomy is the ethical principle that respects an individual's right to make their own decisions about their care, even if the healthcare provider disagrees with those decisions.
+                    </div>
+                    
+                    <div class="explanation-rationale">
+                        <div class="explanation-rationale-title">Rationale:</div>
+                        <div class="explanation-rationale-text" id="explanationRationale">
+                            While beneficence involves doing good for the patient, autonomy takes precedence when a competent client makes an informed decision to refuse treatment.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-controls">
+            <div class="control-left">
+                <button class="btn btn-warning" onclick="flagQuestion()" id="flagBtn">
+                    <i class="fas fa-flag"></i>
+                    Flag Question
+                </button>
+            </div>
+            
+            <div class="control-right">
+                <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn">
+                    Next Question
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentQuizData = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizTimer = null;
+        let timerSeconds = 0;
+        let showingExplanation = false;
+        
+        let appData = {
+            progress: 72,
+            daysStudied: 28,
+            questionsCompleted: 1247,
+            daysUntilExam: 42,
+            avgScore: 78,
+            testsCompleted: 15,
+            questionsLeft: 205,
+            flaggedItems: 23,
+            studyHours: 186
+        };
+
+        // Database management
+        let db = null;
+        let allQuestions = [];
+        let isDbLoaded = false;
+        let currentUser = null;
+        
+        // Initialize SQL.js and load database
+        async function initDatabase() {
+            try {
+                // Initialize SQL.js
+                const SQL = await initSqlJs({
+                    locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+                });
+                
+                // Load database file
+                const response = await fetch('./data/nclex_question_bank.db');
+                if (!response.ok) {
+                    throw new Error('Failed to load database');
+                }
+                const buffer = await response.arrayBuffer();
+                db = new SQL.Database(new Uint8Array(buffer));
+                
+                // Load all questions into memory for better performance
+                await loadAllQuestions();
+                isDbLoaded = true;
+                
+                showNotification('Question database loaded successfully!');
+                updateStats();
+            } catch (error) {
+                console.error('Database initialization error:', error);
+                showNotification('Failed to load question database. Using sample questions.', 'error');
+                // Fallback to sample questions
+                allQuestions = getSampleQuestions();
+                isDbLoaded = false;
+            }
+        }
+        
+        // Load all questions from database
+        async function loadAllQuestions() {
+            const query = `
+                SELECT 
+                    q.id, q.number, q.stem, q.question_type, q.explanation,
+                    GROUP_CONCAT(qc.choice_key || ':|:' || qc.body || ':|:' || qc.is_correct, '|:|') as choices
+                FROM questions q
+                LEFT JOIN question_choices qc ON q.id = qc.question_id
+                GROUP BY q.id
+                ORDER BY q.number
+            `;
+            
+            const results = db.exec(query);
+            if (results.length === 0) return;
+            
+            allQuestions = results[0].values.map(row => {
+                const [id, number, stem, questionType, explanation, choicesStr] = row;
+                
+                // Parse choices
+                const answers = [];
+                let correct = null;
+                const correctAnswers = [];
+                
+                if (choicesStr) {
+                    const choiceParts = choicesStr.split('|:|');
+                    for (let i = 0; i < choiceParts.length; i += 3) {
+                        if (i + 2 < choiceParts.length) {
+                            const choiceKey = choiceParts[i];
+                            const choiceBody = choiceParts[i + 1];
+                            const isCorrect = choiceParts[i + 2] === '1';
+                            
+                            answers.push(choiceBody);
+                            
+                            if (isCorrect) {
+                                if (questionType === 'single_choice') {
+                                    correct = answers.length - 1;
+                                } else if (questionType === 'multi_select') {
+                                    correctAnswers.push(answers.length - 1);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if (questionType === 'multi_select' && correctAnswers.length > 0) {
+                    correct = correctAnswers;
+                }
+                
+                return {
+                    id: number,
+                    category: getCategoryFromContent(stem),
+                    question: stem,
+                    question_type: questionType,
+                    answers: answers,
+                    correct: correct,
+                    explanation: explanation || '',
+                    rationale: explanation || ''
+                };
+            });
+        }
+        
+        // Update statistics with real data
+        function updateStats() {
+            if (isDbLoaded && allQuestions.length > 0) {
+                // Update total questions available
+                appData.questionsLeft = allQuestions.length;
+                
+                // Update display
+                updateDisplayedStats();
+            }
+        }
+        
+        // Get random questions with advanced filtering
+        function getRandomQuestions(count = 10, options = {}) {
+            if (!isDbLoaded || allQuestions.length === 0) {
+                return getSampleQuestions().slice(0, count);
+            }
+            
+            let filtered = [...allQuestions];
+            
+            // Filter by question type if specified
+            if (options.questionType) {
+                filtered = filtered.filter(q => q.question_type === options.questionType);
+            }
+            
+            // Filter by category if specified
+            if (options.category) {
+                filtered = filtered.filter(q => 
+                    q.category.toLowerCase().includes(options.category.toLowerCase())
+                );
+            }
+            
+            // Exclude previously used questions if specified
+            if (options.excludeIds && options.excludeIds.length > 0) {
+                filtered = filtered.filter(q => !options.excludeIds.includes(q.id));
+            }
+            
+            // Shuffle and return requested count
+            const shuffled = filtered.sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, Math.min(count, shuffled.length));
+        }
+        
+        // Get questions by specific criteria
+        function getQuestionsByType(questionType, count = 10) {
+            return getRandomQuestions(count, { questionType });
+        }
+        
+        // Get statistics about available questions
+        function getQuestionStats() {
+            if (!isDbLoaded || allQuestions.length === 0) {
+                return { total: 0, byType: {} };
+            }
+            
+            const stats = {
+                total: allQuestions.length,
+                byType: {},
+                byCategory: {}
+            };
+            
+            allQuestions.forEach(q => {
+                // Count by type
+                stats.byType[q.question_type] = (stats.byType[q.question_type] || 0) + 1;
+                
+                // Count by category
+                stats.byCategory[q.category] = (stats.byCategory[q.category] || 0) + 1;
+            });
+            
+            return stats;
+        }
+        
+        // Get category from question content (simple categorization)
+        function getCategoryFromContent(content) {
+            const categories = {
+                'Management of Care': ['management', 'delegation', 'supervision', 'ethical', 'legal'],
+                'Safety and Infection Control': ['infection', 'isolation', 'safety', 'precaution', 'sterile'],
+                'Health Promotion': ['health promotion', 'prevention', 'screening', 'immunization'],
+                'Psychosocial Integrity': ['anxiety', 'depression', 'grief', 'therapeutic', 'communication'],
+                'Basic Care': ['nutrition', 'elimination', 'mobility', 'comfort'],
+                'Pharmacological Therapies': ['medication', 'drug', 'therapy', 'pharmacological', 'adverse'],
+                'Reduction of Risk': ['risk', 'complication', 'monitoring', 'assessment'],
+                'Physiological Adaptation': ['disease', 'condition', 'pathophysiology', 'treatment']
+            };
+            
+            const lowerContent = content.toLowerCase();
+            for (const [category, keywords] of Object.entries(categories)) {
+                if (keywords.some(keyword => lowerContent.includes(keyword))) {
+                    return category;
+                }
+            }
+            
+            return 'Management of Care'; // Default category
+        }
+        
+        // Fallback sample questions
+        function getSampleQuestions() {
+            return [
+                {
+                    id: 1,
+                    category: "Management of Care",
+                    question: "A nurse is caring for a client who refuses to take prescribed medication. Which ethical principle should guide the nurse's response?",
+                    question_type: "single_choice",
+                    answers: [
+                        "Autonomy - respecting the client's right to make decisions",
+                        "Beneficence - doing what's best for the client", 
+                        "Justice - ensuring fair treatment",
+                        "Fidelity - being truthful and trustworthy"
+                    ],
+                    correct: 0,
+                    explanation: "Autonomy is the ethical principle that respects an individual's right to make their own decisions about their care.",
+                    rationale: "While beneficence involves doing good for the patient, autonomy takes precedence when a competent client makes an informed decision to refuse treatment."
+                }
+            ];
+        }
+
+        // Navigation functions
+        function switchTab(tab) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+            
+            // Hide all page content
+            document.querySelectorAll('.page-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected page content
+            document.getElementById(`${tab}-content`).classList.add('active');
+            
+            // Hide quiz page if showing
+            document.getElementById('quizPage').classList.remove('active');
+            
+            // Prevent default link behavior
+            event.preventDefault();
+            return false;
+        }
+
+        // User dropdown functions
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function editProfile() {
+            showNotification('Profile editing feature coming soon!');
+            toggleUserDropdown();
+        }
+
+        function viewSubscription() {
+            showNotification('Subscription management feature coming soon!');
+            toggleUserDropdown();
+        }
+        
+        function viewProgress() {
+            showNotification('Detailed progress analytics coming soon!');
+            toggleUserDropdown();
+        }
+        
+        // Check if user is authenticated
+        async function checkUserAuthentication() {
+            try {
+                // Wait for UserSystem to be ready
+                let attempts = 0;
+                while (!window.UserSystem && attempts < 50) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    attempts++;
+                }
+                
+                if (!window.UserSystem) {
+                    console.warn('UserSystem not available, redirecting to login');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                currentUser = await window.UserSystem.getCurrentUser();
+                
+                if (!currentUser) {
+                    console.log('No user session found, redirecting to login');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                console.log('User authenticated:', currentUser.email);
+                updateUserInterface();
+                
+            } catch (error) {
+                console.error('Authentication check failed:', error);
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Update user interface with current user info
+        function updateUserInterface() {
+            if (!currentUser) return;
+            
+            // Update avatar with user initials
+            const userAvatar = document.getElementById('userAvatar');
+            const initials = getUserInitials(currentUser.firstName, currentUser.lastName);
+            if (userAvatar) {
+                userAvatar.textContent = initials;
+            }
+            
+            // Update user info in dropdown
+            const userInfo = document.getElementById('userInfo');
+            if (userInfo) {
+                const userName = userInfo.querySelector('.user-name');
+                const userEmail = userInfo.querySelector('.user-email');
+                
+                if (userName) {
+                    userName.textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+                }
+                
+                if (userEmail) {
+                    userEmail.textContent = currentUser.email;
+                }
+            }
+            
+            console.log('User interface updated for:', currentUser.email);
+        }
+        
+        // Get user initials for avatar
+        function getUserInitials(firstName, lastName) {
+            if (!firstName && !lastName) return '?';
+            
+            const first = firstName ? firstName.charAt(0).toUpperCase() : '';
+            const last = lastName ? lastName.charAt(0).toUpperCase() : '';
+            
+            return first + last || '?';
+        }
+
+        async function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                try {
+                    showNotification('Logging out...');
+                    
+                    if (window.UserSystem) {
+                        await window.UserSystem.logout();
+                    }
+                    
+                    // Clear any local quiz data
+                    localStorage.removeItem('quiz_progress');
+                    sessionStorage.clear();
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    // Force redirect even on error
+                    window.location.href = 'login.html';
+                }
+            }
+            toggleUserDropdown();
+        }
+
+        // Quiz functions
+        function startQuiz(type) {
+            // Get appropriate questions based on quiz type
+            let questions;
+            let count = type === 'timed' ? 75 : 25; // Timed quiz gets more questions
+            
+            if (type === 'adaptive') {
+                questions = getRandomQuestions(count);
+            } else if (type === 'timed') {
+                questions = getRandomQuestions(count);
+            } else {
+                questions = getRandomQuestions(count);
+            }
+            
+            currentQuizData = {
+                type: type,
+                questions: questions,
+                timeLimit: type === 'timed' ? 15 * 60 : null // 15 minutes for timed quiz
+            };
+            
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            showingExplanation = false;
+            
+            // Hide all other content and show quiz page
+            document.querySelectorAll('.page-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('quizPage').classList.add('active');
+            
+            // Update quiz header
+            document.getElementById('quizPageTitle').textContent = `${type.charAt(0).toUpperCase() + type.slice(1)} Practice Quiz`;
+            document.getElementById('quizPageSubtitle').textContent = `NCLEX-RN Preparation • ${currentQuizData.questions.length} Questions`;
+            
+            // Start timer if needed
+            if (currentQuizData.timeLimit) {
+                startTimer(currentQuizData.timeLimit);
+                document.getElementById('quizTimer').style.display = 'flex';
+            } else {
+                document.getElementById('quizTimer').style.display = 'none';
+            }
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const question = currentQuizData.questions[currentQuestionIndex];
+            
+            // Update progress
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = currentQuizData.questions.length;
+            document.getElementById('questionCategory').textContent = question.category;
+            
+            // Update question
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Update answers
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = question.answers.map((answer, index) => `
+                <div class="answer-option" onclick="selectAnswer(${index})">
+                    <div class="answer-letter">${String.fromCharCode(65 + index)}</div>
+                    <div>${answer}</div>
+                </div>
+            `).join('');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.innerHTML = currentQuestionIndex === currentQuizData.questions.length - 1 ? 
+                'Finish Quiz <i class="fas fa-check"></i>' : 
+                'Next Question <i class="fas fa-chevron-right"></i>';
+            
+            // Show question container, hide explanation
+            document.getElementById('questionContainer').style.display = 'block';
+            document.getElementById('explanationSection').classList.remove('show');
+            showingExplanation = false;
+            
+            // Restore previous answer if exists
+            if (userAnswers[currentQuestionIndex] !== undefined) {
+                document.querySelectorAll('.answer-option')[userAnswers[currentQuestionIndex]].classList.add('selected');
+            }
+        }
+
+        function selectAnswer(answerIndex) {
+            // Remove previous selection
+            document.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            document.querySelectorAll('.answer-option')[answerIndex].classList.add('selected');
+            
+            // Store answer
+            userAnswers[currentQuestionIndex] = answerIndex;
+        }
+
+        function nextQuestion() {
+            if (!showingExplanation) {
+                // Check if answer is selected
+                if (userAnswers[currentQuestionIndex] === undefined) {
+                    showNotification('Please select an answer before continuing.');
+                    return;
+                }
+                
+                // Show explanation
+                showExplanation();
+            } else {
+                // Move to next question or finish quiz
+                if (currentQuestionIndex === currentQuizData.questions.length - 1) {
+                    finishQuiz();
+                } else {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function showExplanation() {
+            const question = currentQuizData.questions[currentQuestionIndex];
+            const userAnswer = userAnswers[currentQuestionIndex];
+            const isCorrect = userAnswer === question.correct;
+            
+            // Update answer options to show correct/incorrect
+            document.querySelectorAll('.answer-option').forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === userAnswer && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Update explanation content
+            const explanationHeader = document.getElementById('explanationHeader');
+            explanationHeader.className = `explanation-header ${isCorrect ? 'correct' : 'incorrect'}`;
+            explanationHeader.innerHTML = `
+                <i class="fas fa-${isCorrect ? 'check' : 'times'}-circle explanation-icon"></i>
+                <div class="explanation-title">${isCorrect ? 'Correct!' : 'Incorrect.'} The answer is ${String.fromCharCode(65 + question.correct)}.</div>
+            `;
+            
+            document.getElementById('explanationText').textContent = question.explanation;
+            document.getElementById('explanationRationale').textContent = question.rationale;
+            
+            // Show explanation section
+            document.getElementById('explanationSection').classList.add('show');
+            
+            // Update next button
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.innerHTML = currentQuestionIndex === currentQuizData.questions.length - 1 ? 
+                'Finish Quiz <i class="fas fa-check"></i>' : 
+                'Continue <i class="fas fa-arrow-right"></i>';
+            
+            showingExplanation = true;
+        }
+
+        function flagQuestion() {
+            showNotification('Question flagged for review!');
+            appData.flaggedItems++;
+            document.getElementById('flaggedItems').textContent = appData.flaggedItems;
+        }
+
+        function finishQuiz() {
+            const correctAnswers = userAnswers.filter((answer, index) => 
+                answer === currentQuizData.questions[index].correct
+            ).length;
+            
+            const score = Math.round((correctAnswers / currentQuizData.questions.length) * 100);
+            
+            // Update stats
+            appData.testsCompleted++;
+            appData.questionsCompleted += currentQuizData.questions.length;
+            appData.questionsLeft = Math.max(0, appData.questionsLeft - currentQuizData.questions.length);
+            
+            // Recalculate average score
+            appData.avgScore = Math.round((appData.avgScore + score) / 2);
+            
+            updateDisplayedStats();
+            
+            showNotification(`Quiz completed! Score: ${score}% (${correctAnswers}/${currentQuizData.questions.length})`);
+            exitQuiz();
+        }
+
+        function exitQuiz() {
+            // Hide quiz page
+            document.getElementById('quizPage').classList.remove('active');
+            
+            // Show tests page
+            document.getElementById('tests-content').classList.add('active');
+            document.querySelector('[data-tab="tests"]').classList.add('active');
+            
+            // Clear timer
+            if (quizTimer) {
+                clearInterval(quizTimer);
+                quizTimer = null;
+            }
+        }
+
+        function startTimer(seconds) {
+            timerSeconds = seconds;
+            updateTimerDisplay();
+            
+            quizTimer = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+                
+                if (timerSeconds <= 0) {
+                    clearInterval(quizTimer);
+                    showNotification('Time is up!');
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Utility functions
+        function updateDisplayedStats() {
+            document.getElementById('overallProgress').textContent = `${appData.progress}%`;
+            document.getElementById('daysStudied').textContent = appData.daysStudied;
+            document.getElementById('questionsCompleted').textContent = appData.questionsCompleted;
+            document.getElementById('daysUntilExam').textContent = appData.daysUntilExam;
+            document.getElementById('avgScore').textContent = `${appData.avgScore}%`;
+            document.getElementById('testsCompleted').textContent = appData.testsCompleted;
+            document.getElementById('questionsLeft').textContent = appData.questionsLeft;
+            document.getElementById('flaggedItems').textContent = appData.flaggedItems;
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                    <i class="fas fa-check-circle" style="color: var(--success-500);"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+
+        function showDetails(type) {
+            let message = '';
+            switch(type) {
+                case 'progress':
+                    message = `You've completed ${appData.progress}% of the NCLEX-RN study material. Keep up the great work!`;
+                    break;
+                case 'days':
+                    message = `You've been studying consistently for ${appData.daysStudied} days. Consistency is key to success!`;
+                    break;
+                case 'questions':
+                    message = `You've answered ${appData.questionsCompleted} questions so far. Each question brings you closer to passing!`;
+                    break;
+                case 'exam':
+                    message = `Your exam is in ${appData.daysUntilExam} days. Stay focused and keep practicing!`;
+                    break;
+            }
+            showNotification(message);
+        }
+
+        // Additional functions
+        function reviewFlagged() {
+            showNotification('Flagged questions review coming soon!');
+        }
+
+        function customQuiz() {
+            showNotification('Custom quiz builder coming soon!');
+        }
+
+        function exportData() {
+            showNotification('Data export feature coming soon!');
+        }
+
+        function changeTimeframe(period) {
+            // Update button styles
+            document.querySelectorAll('.chart-container').forEach(container => {
+                const buttons = container.parentNode.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    btn.className = btn.className.replace('btn-primary', 'btn-secondary');
+                });
+            });
+            
+            // Set active button
+            event.target.className = event.target.className.replace('btn-secondary', 'btn-primary');
+            
+            // Update chart data based on timeframe
+            let chartData = [];
+            switch(period) {
+                case 'week':
+                    chartData = [78, 80, 82, 79, 85, 87, 89]; // Last 7 tests
+                    break;
+                case 'month':
+                    chartData = [72, 75, 78, 80, 82, 79, 85, 87, 89]; // Last 30 days
+                    break;
+                case 'all':
+                default:
+                    chartData = [65, 68, 66, 72, 75, 78, 80, 82, 79, 85, 87, 89]; // All time
+                    break;
+            }
+            
+            // Redraw chart with new data
+            drawLearningChartWithData(chartData);
+            
+            showNotification(`Chart updated to show ${period === 'all' ? 'all time' : period === 'week' ? '7 days' : '30 days'} data.`);
+        }
+        
+        function drawLearningChartWithData(testScores) {
+            const canvas = document.getElementById('learningChart');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+            
+            // Chart dimensions
+            const padding = 60;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+            
+            // Set font
+            ctx.font = '12px Inter, sans-serif';
+            
+            // Draw grid lines
+            ctx.strokeStyle = '#e5e7eb';
+            ctx.lineWidth = 1;
+            
+            // Horizontal grid lines (score levels)
+            for (let i = 0; i <= 10; i++) {
+                const y = padding + (i / 10) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+                
+                // Y-axis labels
+                ctx.fillStyle = '#6b7280';
+                const score = 100 - (i * 10);
+                ctx.fillText(`${score}%`, 10, y + 4);
+            }
+            
+            // Vertical grid lines
+            for (let i = 0; i < testScores.length; i++) {
+                const x = padding + (i / (testScores.length - 1)) * chartWidth;
+                ctx.beginPath();
+                ctx.moveTo(x, padding);
+                ctx.lineTo(x, height - padding);
+                ctx.stroke();
+            }
+            
+            // Draw curve
+            const points = testScores.map((score, index) => ({
+                x: padding + (index / (testScores.length - 1)) * chartWidth,
+                y: padding + ((100 - score) / 100) * chartHeight,
+                score
+            }));
+            
+            // Draw smooth curve
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            
+            if (points.length > 0) {
+                ctx.moveTo(points[0].x, points[0].y);
+                
+                for (let i = 1; i < points.length; i++) {
+                    const prevPoint = points[i - 1];
+                    const currentPoint = points[i];
+                    
+                    if (i === 1) {
+                        ctx.lineTo(currentPoint.x, currentPoint.y);
+                    } else {
+                        const cp1x = prevPoint.x + (currentPoint.x - prevPoint.x) * 0.5;
+                        const cp1y = prevPoint.y;
+                        const cp2x = currentPoint.x - (currentPoint.x - prevPoint.x) * 0.5;
+                        const cp2y = currentPoint.y;
+                        
+                        ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, currentPoint.x, currentPoint.y);
+                    }
+                }
+            }
+            ctx.stroke();
+            
+            // Draw area under curve with gradient
+            ctx.globalAlpha = 0.1;
+            const gradient = ctx.createLinearGradient(0, padding, 0, height - padding);
+            gradient.addColorStop(0, '#2563eb');
+            gradient.addColorStop(1, 'transparent');
+            ctx.fillStyle = gradient;
+            
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, height - padding);
+            ctx.lineTo(points[0].x, points[0].y);
+            
+            for (let i = 1; i < points.length; i++) {
+                const prevPoint = points[i - 1];
+                const currentPoint = points[i];
+                
+                if (i === 1) {
+                    ctx.lineTo(currentPoint.x, currentPoint.y);
+                } else {
+                    const cp1x = prevPoint.x + (currentPoint.x - prevPoint.x) * 0.5;
+                    const cp1y = prevPoint.y;
+                    const cp2x = currentPoint.x - (currentPoint.x - prevPoint.x) * 0.5;
+                    const cp2y = currentPoint.y;
+                    
+                    ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, currentPoint.x, currentPoint.y);
+                }
+            }
+            
+            ctx.lineTo(points[points.length - 1].x, height - padding);
+            ctx.closePath();
+            ctx.fill();
+            ctx.globalAlpha = 1;
+            
+            // Draw data points
+            points.forEach((point, index) => {
+                let color = '#ef4444'; // Below passing (red)
+                if (point.score >= 75 && point.score < 85) color = '#f59e0b'; // Passing (orange)
+                if (point.score >= 85) color = '#10b981'; // Excellent (green)
+                
+                // Point shadow
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.beginPath();
+                ctx.arc(point.x + 1, point.y + 1, 6, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Point
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Point border
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            });
+            
+            // X-axis labels
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '11px Inter, sans-serif';
+            points.forEach((point, index) => {
+                const text = `T${index + 1}`;
+                const textWidth = ctx.measureText(text).width;
+                ctx.fillText(text, point.x - textWidth / 2, height - padding + 20);
+            });
+            
+            // Add score threshold lines
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.3)';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            
+            // 75% passing line
+            const passingY = padding + ((100 - 75) / 100) * chartHeight;
+            ctx.beginPath();
+            ctx.moveTo(padding, passingY);
+            ctx.lineTo(width - padding, passingY);
+            ctx.stroke();
+            
+            // 85% excellent line
+            const excellentY = padding + ((100 - 85) / 100) * chartHeight;
+            ctx.strokeStyle = 'rgba(16, 185, 129, 0.3)';
+            ctx.beginPath();
+            ctx.moveTo(padding, excellentY);
+            ctx.lineTo(width - padding, excellentY);
+            ctx.stroke();
+            
+            ctx.setLineDash([]);
+        }
+
+        // Settings functions
+        function adjustStudyMode() {
+            const modes = ['Adaptive Learning', 'Fixed Practice', 'Review Mode'];
+            const currentIndex = modes.indexOf(appData.studyMode || 'Adaptive Learning');
+            const newMode = modes[(currentIndex + 1) % modes.length];
+            appData.studyMode = newMode;
+            document.getElementById('studyModeDesc').textContent = newMode;
+            showNotification(`Study mode changed to: ${newMode}`);
+        }
+
+        function setExamDate() {
+            const newDate = prompt('Enter your exam date (YYYY-MM-DD):', '2025-03-15');
+            if (newDate && new Date(newDate).getTime() > Date.now()) {
+                const daysLeft = Math.ceil((new Date(newDate) - new Date()) / (1000 * 60 * 60 * 24));
+                appData.daysUntilExam = daysLeft;
+                
+                // Update exam date in settings
+                const examDescElements = document.querySelectorAll('.setting-desc');
+                examDescElements.forEach(el => {
+                    if (el.textContent.includes('March 15, 2025')) {
+                        el.textContent = newDate;
+                    }
+                });
+                
+                // Update countdown badge
+                const countdownElements = document.querySelectorAll('.countdown');
+                countdownElements.forEach(el => {
+                    el.textContent = `${daysLeft} days`;
+                });
+                
+                // Update other references if they exist
+                if (document.getElementById('daysUntilExam')) {
+                    document.getElementById('daysUntilExam').textContent = daysLeft;
+                }
+                
+                showNotification('Exam date updated!');
+            }
+        }
+
+        function setDailyGoal() {
+            const newGoal = prompt('Enter your daily question goal:', document.getElementById('dailyGoalValue').textContent);
+            if (newGoal && !isNaN(newGoal) && newGoal > 0) {
+                document.getElementById('dailyGoalValue').textContent = newGoal;
+                appData.dailyGoal = newGoal;
+                showNotification(`Daily goal set to ${newGoal} questions!`);
+            }
+        }
+
+        function toggleTheme() {
+            showNotification('Theme switching feature coming soon!');
+        }
+
+        // New Modern Settings Functions
+        function adjustGoal(change) {
+            const goalElement = document.getElementById('dailyGoalValue');
+            let currentGoal = parseInt(goalElement.textContent) || 50;
+            let newGoal = currentGoal + change;
+            
+            // Limit range between 10 and 200
+            newGoal = Math.max(10, Math.min(200, newGoal));
+            
+            goalElement.textContent = newGoal;
+            appData.dailyGoal = newGoal;
+            showNotification(`Daily goal updated to ${newGoal} questions`);
+        }
+
+        function toggleDarkMode() {
+            const toggle = document.getElementById('darkModeToggle');
+            const isEnabled = toggle.checked;
+            
+            if (isEnabled) {
+                showNotification('Dark mode enabled - Feature coming soon!');
+            } else {
+                showNotification('Dark mode disabled');
+            }
+        }
+
+        function toggleReminders() {
+            const toggle = document.getElementById('remindersToggle');
+            const isEnabled = toggle.checked;
+            
+            if (isEnabled) {
+                showNotification('Study reminders enabled');
+            } else {
+                showNotification('Study reminders disabled');
+            }
+        }
+
+        function toggleScoreAlerts() {
+            const toggle = document.getElementById('scoreAlertsToggle');
+            const isEnabled = toggle.checked;
+            
+            if (isEnabled) {
+                showNotification('Score alerts enabled');
+            } else {
+                showNotification('Score alerts disabled');
+            }
+        }
+
+        function manageSubscription() {
+            showNotification('Opening subscription management...');
+            setTimeout(() => {
+                if (confirm('Your Premium subscription is active until December 2024. Would you like to view billing details?')) {
+                    showNotification('Redirecting to billing portal...');
+                }
+            }, 500);
+        }
+
+        function exportProgress() {
+            showNotification('Preparing your progress report...');
+            
+            setTimeout(() => {
+                const data = {
+                    totalQuestions: appData.questionsCompleted,
+                    averageScore: appData.avgScore,
+                    testsCompleted: appData.testsCompleted,
+                    studyTime: appData.studyHours,
+                    exportDate: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const url = URL.createObjectURL(dataBlob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'nclex-progress-report.json';
+                link.click();
+                
+                URL.revokeObjectURL(url);
+                showNotification('Progress report downloaded!');
+            }, 1500);
+        }
+
+        function showDataUsage() {
+            const usageInfo = `Data Usage Information:
+
+• Local Storage: 2.4 MB
+• Questions Database: 1.8 MB
+• Progress Data: 0.4 MB  
+• Settings & Cache: 0.2 MB
+
+• Last Sync: 2 hours ago
+• Backup Status: Up to date
+• Total Questions Downloaded: 1,247`;
+            
+            alert(usageInfo);
+        }
+
+        function showVersion() {
+            const versionInfo = `NCLEX-RN Prep App
+Version 2.1.4 (Build 1247)
+
+• Released: September 2024
+• Platform: Web Progressive App
+• Framework: Modern JavaScript
+• Last Updated: 3 days ago
+
+What's New:
+• Improved learning analytics
+• Enhanced quiz interface  
+• Better progress tracking
+• Performance optimizations`;
+            
+            alert(versionInfo);
+        }
+
+        function showSupport() {
+            const supportInfo = `Help & Support Options:
+
+📧 Email: support@nclexprep.com
+💬 Live Chat: Available 9 AM - 6 PM EST
+📚 Knowledge Base: help.nclexprep.com
+🎥 Video Tutorials: tutorials.nclexprep.com
+
+Common Topics:
+• Getting Started Guide
+• Study Strategy Tips
+• Technical Troubleshooting
+• Account & Billing
+• NCLEX Exam Information`;
+            
+            alert(supportInfo);
+        }
+
+        function setStudyReminders() {
+            const newTime = prompt('Enter reminder time (e.g., 9:00 AM):', '9:00 AM');
+            if (newTime) {
+                document.getElementById('reminderDesc').textContent = `Daily at ${newTime}`;
+                showNotification(`Study reminders set for ${newTime}!`);
+            }
+        }
+
+        function setProgressUpdates() {
+            showNotification('Progress update settings feature coming soon!');
+        }
+
+        function resetProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                appData.progress = 0;
+                appData.daysStudied = 0;
+                appData.questionsCompleted = 0;
+                appData.testsCompleted = 0;
+                appData.avgScore = 0;
+                appData.flaggedItems = 0;
+                appData.studyHours = 0;
+                updateDisplayedStats();
+                showNotification('Progress reset successfully!');
+            }
+        }
+
+        function manageAccount() {
+            showNotification('Account management feature coming soon!');
+        }
+
+        function contactSupport() {
+            showNotification('Opening support center...');
+        }
+
+        function viewPrivacy() {
+            showNotification('Privacy policy feature coming soon!');
+        }
+
+        // Subject and analytics loading
+        const subjects = [
+            {
+                id: 'management',
+                title: 'Management of Care',
+                subtitle: '110 questions',
+                icon: 'fas fa-user-md',
+                color: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                progress: 68,
+                avgScore: 75
+            },
+            {
+                id: 'safety',
+                title: 'Safety & Infection Control', 
+                subtitle: '95 questions',
+                icon: 'fas fa-shield-alt',
+                color: 'linear-gradient(135deg, #10b981, #059669)',
+                progress: 82,
+                avgScore: 87
+            },
+            {
+                id: 'health',
+                title: 'Health Promotion',
+                subtitle: '88 questions', 
+                icon: 'fas fa-heart',
+                color: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                progress: 45,
+                avgScore: 62
+            },
+            {
+                id: 'psychosocial',
+                title: 'Psychosocial Integrity',
+                subtitle: '102 questions',
+                icon: 'fas fa-brain', 
+                color: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                progress: 56,
+                avgScore: 71
+            },
+            {
+                id: 'basic',
+                title: 'Basic Care & Comfort',
+                subtitle: '78 questions',
+                icon: 'fas fa-bed',
+                color: 'linear-gradient(135deg, #06b6d4, #0891b2)',
+                progress: 73,
+                avgScore: 79
+            },
+            {
+                id: 'pharmacological',
+                title: 'Pharmacological Therapies',
+                subtitle: '92 questions',
+                icon: 'fas fa-pills',
+                color: 'linear-gradient(135deg, #ec4899, #db2777)',
+                progress: 61,
+                avgScore: 74
+            }
+        ];
+
+        function loadSubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            if (grid) {
+                grid.innerHTML = subjects.map(subject => `
+                    <div class="subject-card" onclick="startPractice('${subject.id}')">
+                        <div class="subject-header">
+                            <div class="subject-icon" style="background: ${subject.color};">
+                                <i class="${subject.icon}"></i>
+                            </div>
+                            <div>
+                                <div class="subject-title">${subject.title}</div>
+                                <div class="subject-subtitle">${subject.subtitle} • ${subject.progress}% complete</div>
+                            </div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>${subject.progress}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${subject.progress}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function loadAnalytics() {
+            loadChart();
+            loadSubjectPerformance();
+        }
+
+        function drawLearningChart() {
+            // Default chart data (all time)
+            const testScores = [65, 68, 66, 72, 75, 78, 80, 82, 79, 85, 87, 89];
+            drawLearningChartWithData(testScores);
+        }
+
+        function loadChart() {
+            // Legacy function - now handled by drawLearningChart
+            drawLearningChart();
+        }
+
+        function loadSubjectPerformance() {
+            const container = document.getElementById('subjectPerformance');
+            if (container) {
+                const sortedSubjects = [...subjects].sort((a, b) => b.avgScore - a.avgScore);
+                
+                container.innerHTML = `
+                    <div class="subjects-grid">
+                        ${sortedSubjects.slice(0, 4).map(subject => {
+                            let status = 'Needs improvement';
+                            let statusColor = 'var(--error-500)';
+                            
+                            if (subject.avgScore >= 75 && subject.avgScore < 85) {
+                                status = 'Good progress';
+                                statusColor = 'var(--warning-500)';
+                            } else if (subject.avgScore >= 85) {
+                                status = 'Excellent';
+                                statusColor = 'var(--success-500)';
+                            }
+                            
+                            return `
+                                <div class="subject-card">
+                                    <div class="subject-header">
+                                        <div class="subject-icon" style="background: ${subject.color};">
+                                            <i class="${subject.icon}"></i>
+                                        </div>
+                                        <div>
+                                            <div class="subject-title">${subject.title}</div>
+                                            <div class="subject-subtitle" style="color: ${statusColor};">${status} • ${subject.avgScore}% average</div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Performance</span>
+                                            <span>${subject.avgScore}%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: ${subject.avgScore}%; background: ${statusColor};"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        function startPractice(subjectId) {
+            const subject = subjects.find(s => s.id === subjectId);
+            if (subject) {
+                // Get random questions (could be filtered by category in the future)
+                const questions = getRandomQuestions(20);
+                
+                currentQuizData = {
+                    type: 'practice',
+                    questions: questions,
+                    subject: subject.title
+                };
+                
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                showingExplanation = false;
+                
+                // Hide all other content and show quiz page
+                document.querySelectorAll('.page-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById('quizPage').classList.add('active');
+                
+                // Update quiz header
+                document.getElementById('quizPageTitle').textContent = `${subject.title} Practice`;
+                document.getElementById('quizPageSubtitle').textContent = `NCLEX-RN Preparation • ${currentQuizData.questions.length} Questions`;
+                
+                document.getElementById('quizTimer').style.display = 'none';
+                
+                loadQuestion();
+            }
+        }
+
+        function startQuickPractice() {
+            // Quick practice with random 10 questions
+            const questions = getRandomQuestions(10);
+            
+            currentQuizData = {
+                type: 'quick',
+                questions: questions,
+                timeLimit: null
+            };
+            
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            showingExplanation = false;
+            
+            // Hide all other content and show quiz page
+            document.querySelectorAll('.page-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('quizPage').classList.add('active');
+            
+            // Update quiz header
+            document.getElementById('quizPageTitle').textContent = 'Quick Practice';
+            document.getElementById('quizPageSubtitle').textContent = `NCLEX-RN Preparation • ${currentQuizData.questions.length} Questions`;
+            
+            document.getElementById('quizTimer').style.display = 'none';
+            
+            loadQuestion();
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', async function() {
+            // First check authentication
+            await checkUserAuthentication();
+            
+            // Initialize database on page load
+            initDatabase();
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const dropdown = document.getElementById('userDropdown');
+                const avatar = document.querySelector('.user-avatar');
+                
+                if (!dropdown.contains(event.target) && !avatar.contains(event.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            // Load initial data
+            loadSubjects();
+            loadAnalytics();
+            updateDisplayedStats();
+            drawLearningChart();
+            
+            // Add progress bar animation
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>
